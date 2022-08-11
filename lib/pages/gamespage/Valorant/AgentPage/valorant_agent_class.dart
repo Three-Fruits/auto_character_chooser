@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
 class ValorantAgent {
@@ -10,7 +11,7 @@ class ValorantAgent {
   String fullPortrait;
   String background;
   bool isPlayableCharacter;
-  List<String> backgroundGradientColors = List.empty(growable: true);
+  List<Color> backgroundGradientColors = List.empty(growable: true);
   String voiceLine;
 
   ValorantAgent({
@@ -39,9 +40,9 @@ class ValorantAgentNetwork {
         List<ValorantAgent> agents = List.empty(growable: true);
         for (var a in data["data"]) {
           if (!a["isPlayableCharacter"]) continue;
-          List<String> gcolor = List.empty(growable: true);
+          List<Color> gcolor = List.empty(growable: true);
           for (var i in a["backgroundGradientColors"]) {
-            gcolor.add(i);
+            gcolor.add(Color(int.parse(i, radix: 16)));
           }
           agents.add(
             ValorantAgent(

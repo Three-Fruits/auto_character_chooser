@@ -6,6 +6,12 @@ class DefaultTheme {
     return base.copyWith(
       // colorScheme: _defaultColorCheme,
       textTheme: _buildDefaultTextTheme(base.textTheme),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          onPrimary: Colors.black,
+          primary: buttonColors,
+        ),
+      ),
     );
   }
 }
@@ -46,5 +52,6 @@ TextTheme _buildDefaultTextTheme(TextTheme base) {
 
 const Color mainColor = Color(0xFF64056F);
 const Color secondaryColor = Color(0xFFFAF4FB);
+const Color buttonColors = Colors.green;
 
 const defaultLetterSpacing = 0.03;

@@ -1,5 +1,5 @@
+import 'package:auto_character_chooser/pages/Home/home_page.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_page.dart';
-import 'package:auto_character_chooser/pages/home_page.dart';
 import 'package:auto_character_chooser/themes/default_theme.dart';
 import 'package:flutter/material.dart';
 

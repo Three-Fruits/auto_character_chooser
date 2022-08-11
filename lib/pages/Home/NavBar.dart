@@ -57,7 +57,7 @@ class _NavBarState extends State<NavBar> {
                 ),
                 title: Text('Weapons'),
                 selected: widget.pageName == "/valorant_weapons",
-                onTap: () => selectDestination("/valorant_weapons"),
+                onTap: () => {/*selectDestination("/valorant_weapons")*/},
               ),
               ListTile(
                 leading: Icon(Icons.label),
