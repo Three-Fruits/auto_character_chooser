@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:auto_character_chooser/pages/gamespage/Home/NavBar.dart';
+import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_class.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

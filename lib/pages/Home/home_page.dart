@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/components/cardbutton_component.dart';
-import 'package:auto_character_chooser/pages/gamespage/Home/NavBar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
