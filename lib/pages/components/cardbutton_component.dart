@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class CardButtonComponent extends StatelessWidget {
   final VoidCallback? event;
-  CardButtonComponent({Key? key, this.event}) : super(key: key);
+  final String imageUrl;
+  const CardButtonComponent({Key? key, this.event, required this.imageUrl})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,7 @@ class CardButtonComponent extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(12.0)),
               image: DecorationImage(
-                image: AssetImage('images/logo2.png'),
-              ),
+                  image: AssetImage(imageUrl), fit: BoxFit.cover),
             ),
           ),
           Container(

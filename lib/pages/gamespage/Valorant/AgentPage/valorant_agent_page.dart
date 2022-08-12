@@ -6,6 +6,7 @@ import 'dart:ui';
 
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_class.dart';
+import 'package:auto_character_chooser/themes/images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
@@ -20,11 +21,18 @@ class ValorantAgentPage extends StatefulWidget {
 
 class _ValorantAgentPageState extends State<ValorantAgentPage> {
   StreamController<int> controller = StreamController<int>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  DraggableScrollableController dragController =
+      DraggableScrollableController();
   List<ValorantAgent> agents = List.empty(growable: true);
   bool isFirstTime = true;
   bool isLoading = true;
   bool isSpinning = false;
   late ShakeDetector detector;
+  int oldId = 0;
+  int currentId = 0;
+  double initialSize = 0;
+  double minSize = 0;
 
   void loadAgents() async {
     isLoading = true;
@@ -48,31 +56,38 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
   @override
   void initState() {
     super.initState();
-    print("Loading agents starting...");
+    //print("Loading agents starting...");
     loadAgents();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(),
       drawer: NavBar(pageName: '/valorant_agents'),
+      // bottomNavigationBar: !isSpinning && !isFirstTime
+      //     ? BottomBarComponent(
+      //         scaffoldKey: _scaffoldKey,
+      //       )
+      //     : SizedBox(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/valorant_background.jpg"),
+            image: AssetImage(MyImages.valorantBackground),
             fit: BoxFit.cover,
           ),
         ),
         child: !isLoading
             ? Stack(
-                alignment: Alignment.center,
+                alignment: Alignment.bottomCenter,
                 children: [
                   BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.0)),
+                    filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(color: Colors.white.withOpacity(0.0)),
                     ),
                   ),
                   Align(
@@ -141,6 +156,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
                       ),
                     ),
                   ),
+                  _panel(agents[oldId]),
                   if (isFirstTime)
                     InkWell(
                       onTap: () => spinWheel(),
@@ -148,23 +164,84 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
                         alignment: Alignment.center,
                         height: double.infinity,
                         color: Colors.grey.withOpacity(0.5),
-                        child: Text("Press here to shuffle"),
+                        child: Text(
+                          "Press here or \nShake device to shuffle!",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    )
+                    ),
                 ],
               )
             : Center(
                 child: Text("Loading..."),
               ),
       ),
-      floatingActionButton: !isLoading && !isSpinning
-          ? FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                spinWheel();
-              })
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: !isLoading && !isSpinning && !isFirstTime
+      //     ? FloatingActionButton(
+      //         child: Icon(Icons.add),
+      //         onPressed: () {
+      //           spinWheel();
+      //         })
+      //     : null,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  Widget _panel(ValorantAgent agent) {
+    return DraggableScrollableSheet(
+      controller: dragController,
+      initialChildSize: initialSize,
+      maxChildSize: 0.75,
+      minChildSize: minSize,
+      builder: (context, scrollController) {
+        return Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+          ),
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              ListView(
+                physics: AlwaysScrollableScrollPhysics(),
+                controller: scrollController,
+                shrinkWrap: true,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(
+                          agent.displayIcon,
+                          maxHeight: 100,
+                          maxWidth: 100,
+                        ),
+                      ),
+                      title: Text(agent.displayName),
+                      subtitle: Text(agent.role),
+                      trailing: Icon(Icons.more_vert),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 100,
+                    height: 5,
+                    color: Colors.amber,
+                  ),
+                ],
+              ),
+              FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    spinWheel();
+                  }),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -174,7 +251,15 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
       var rng = Random();
       id = rng.nextInt(agents.length);
     }
-    controller.add(id);
+    if (id >= agents.length) {
+      id = 0;
+    }
+    if (id < 0) {
+      id = agents.length - 1;
+    }
+    print(id);
+    currentId = id;
+    controller.add(id + 1);
     onSpinStart();
     setState(() {});
   }
@@ -183,13 +268,36 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
     print("Spin End");
     isSpinning = false;
     detector.startListening();
+    oldId = currentId;
+    openPanel();
     setState(() {});
   }
 
   void onSpinStart() {
     print("Spin Started");
     isSpinning = true;
-    detector.stopListening();
     setState(() {});
+    detector.stopListening();
+    closePanel();
+    setState(() {});
+  }
+
+  void openPanel() {
+    dragController
+        .animateTo(0.15,
+            duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
+        .then((value) => setState(() => {
+              initialSize = 0.15,
+              minSize = 0.15,
+            }));
+  }
+
+  void closePanel() {
+    minSize = 0;
+    setState(() {});
+    dragController
+        .animateTo(0.00,
+            duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
+        .then((value) => setState(() => initialSize = 0));
   }
 }

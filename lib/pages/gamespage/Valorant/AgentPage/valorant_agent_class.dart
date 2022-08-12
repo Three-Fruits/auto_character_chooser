@@ -13,6 +13,7 @@ class ValorantAgent {
   bool isPlayableCharacter;
   List<Color> backgroundGradientColors = List.empty(growable: true);
   String voiceLine;
+  String role;
 
   ValorantAgent({
     required this.uuid,
@@ -25,6 +26,7 @@ class ValorantAgent {
     required this.isPlayableCharacter,
     required this.backgroundGradientColors,
     required this.voiceLine,
+    required this.role,
   });
 }
 
@@ -56,16 +58,17 @@ class ValorantAgentNetwork {
               isPlayableCharacter: a["isPlayableCharacter"],
               backgroundGradientColors: gcolor,
               voiceLine: a["voiceLine"]["mediaList"][0]["wave"],
+              role: a["role"]["displayName"],
             ),
           );
         }
         return agents;
       } else {
-        print(data['error']['message']);
+        //print(data['error']['message']);
         return List.empty();
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
       return List.empty();
     }
   }

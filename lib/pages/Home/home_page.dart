@@ -2,6 +2,7 @@
 
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/components/cardbutton_component.dart';
+import 'package:auto_character_chooser/themes/images.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(12.0)),
                       image: DecorationImage(
-                        image: AssetImage('images/logo2.png'),
+                        image: AssetImage(MyImages.logoSpinButton),
                       ),
                     ),
                   ),
@@ -66,11 +67,14 @@ class _HomePageState extends State<HomePage> {
                   event: () => {
                     Navigator.pushReplacementNamed(context, "/valorant_agents")
                   },
+                  imageUrl: MyImages.valorantBanner,
                 ),
                 SizedBox(
                   width: 25,
                 ),
-                CardButtonComponent(),
+                CardButtonComponent(
+                  imageUrl: MyImages.valorantBanner,
+                ),
               ],
             ),
             SizedBox(
@@ -79,11 +83,15 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CardButtonComponent(),
+                CardButtonComponent(
+                  imageUrl: MyImages.valorantBanner,
+                ),
                 SizedBox(
                   width: 25,
                 ),
-                CardButtonComponent(),
+                CardButtonComponent(
+                  imageUrl: MyImages.valorantBanner,
+                ),
               ],
             )
           ],
