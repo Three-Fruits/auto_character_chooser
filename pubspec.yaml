@@ -42,7 +42,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   latlong: ^0.6.1
   flutter_map: ^2.2.0
-  solid_bottom_sheet: ^0.1.10
+  audioplayers: ^1.0.1
 
 dev_dependencies:
   flutter_test:

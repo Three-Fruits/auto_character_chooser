@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_class.dart';
 import 'package:auto_character_chooser/themes/images.dart';
@@ -19,8 +20,11 @@ class ValorantAgentPage extends StatefulWidget {
   State<ValorantAgentPage> createState() => _ValorantAgentPageState();
 }
 
-class _ValorantAgentPageState extends State<ValorantAgentPage> {
+class _ValorantAgentPageState extends State<ValorantAgentPage>
+    with TickerProviderStateMixin {
   StreamController<int> controller = StreamController<int>();
+  var audio = AudioPlayer();
+  late AnimationController panelButtonController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   DraggableScrollableController dragController =
       DraggableScrollableController();
@@ -50,6 +54,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    panelButtonController.dispose();
     detector.stopListening();
   }
 
@@ -57,6 +62,9 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
   void initState() {
     super.initState();
     //print("Loading agents starting...");
+    panelButtonController =
+        AnimationController(duration: Duration(milliseconds: 450), vsync: this);
+
     loadAgents();
   }
 
@@ -67,11 +75,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
       extendBodyBehindAppBar: false,
       appBar: AppBar(),
       drawer: NavBar(pageName: '/valorant_agents'),
-      // bottomNavigationBar: !isSpinning && !isFirstTime
-      //     ? BottomBarComponent(
-      //         scaffoldKey: _scaffoldKey,
-      //       )
-      //     : SizedBox(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -85,9 +88,13 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
                 children: [
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
-                    child: Container(
-                      decoration:
-                          BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 700),
+                      color: !isSpinning && !isFirstTime
+                          ? agents[currentId]
+                              .backgroundGradientColors[2]
+                              .withOpacity(0.3)
+                          : Colors.transparent,
                     ),
                   ),
                   Align(
@@ -176,14 +183,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
                 child: Text("Loading..."),
               ),
       ),
-      // floatingActionButton: !isLoading && !isSpinning && !isFirstTime
-      //     ? FloatingActionButton(
-      //         child: Icon(Icons.add),
-      //         onPressed: () {
-      //           spinWheel();
-      //         })
-      //     : null,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -193,6 +192,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
       initialChildSize: initialSize,
       maxChildSize: 0.75,
       minChildSize: minSize,
+      snap: true,
       builder: (context, scrollController) {
         return Container(
           clipBehavior: Clip.antiAlias,
@@ -210,19 +210,39 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
                 controller: scrollController,
                 shrinkWrap: true,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                          agent.displayIcon,
-                          maxHeight: 100,
-                          maxWidth: 100,
+                  InkWell(
+                    onTap: () => {
+                      openPanel(full: dragController.size < 0.2),
+                    },
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: CachedNetworkImageProvider(
+                                agent.displayIcon,
+                                maxHeight: 100,
+                                maxWidth: 100,
+                              ),
+                            ),
+                            title: Text(agent.displayName),
+                            subtitle: Text(agent.role),
+                            trailing: Icon(Icons.more_vert),
+                          ),
                         ),
-                      ),
-                      title: Text(agent.displayName),
-                      subtitle: Text(agent.role),
-                      trailing: Icon(Icons.more_vert),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: AnimatedIcon(
+                            icon: AnimatedIcons.close_menu,
+                            progress: AnimationController(
+                              value: 1 - calculatePanelHeightRatio(),
+                              vsync: this,
+                            ),
+                            semanticLabel: 'Show menu',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -260,12 +280,23 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
     print(id);
     currentId = id;
     controller.add(id + 1);
+    fetchAudio();
     onSpinStart();
     setState(() {});
   }
 
+  void fetchAudio() async {
+    audio.dispose();
+    audio = AudioPlayer();
+    await audio
+        .setSourceUrl(agents[currentId].voiceLine)
+        .whenComplete(() => {});
+    //await audio.release();
+  }
+
   void onSpinEnd() {
     print("Spin End");
+    audio.resume();
     isSpinning = false;
     detector.startListening();
     oldId = currentId;
@@ -282,12 +313,16 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
     setState(() {});
   }
 
-  void openPanel() {
+  void openPanel({bool full = false}) {
+    var temp = 0.15;
+    if (full) {
+      temp = 0.75;
+    }
     dragController
-        .animateTo(0.15,
+        .animateTo(temp,
             duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
         .then((value) => setState(() => {
-              initialSize = 0.15,
+              initialSize = temp,
               minSize = 0.15,
             }));
   }
@@ -299,5 +334,12 @@ class _ValorantAgentPageState extends State<ValorantAgentPage> {
         .animateTo(0.00,
             duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
         .then((value) => setState(() => initialSize = 0));
+  }
+
+  double calculatePanelHeightRatio() {
+    var OldRange = (0.75 - 0.15);
+    var NewRange = 1;
+    var NewValue = (((dragController.size - 0.15) * NewRange) / OldRange);
+    return NewValue;
   }
 }

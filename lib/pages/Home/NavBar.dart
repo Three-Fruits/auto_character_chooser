@@ -1,5 +1,6 @@
 import 'package:auto_character_chooser/themes/images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class NavBar extends StatefulWidget {
   String pageName = "/home";
@@ -78,6 +79,10 @@ class _NavBarState extends State<NavBar> {
     setState(() {
       widget.pageName = name;
     });
-    Navigator.pushReplacementNamed(context, name);
+    if (name == '/home') {
+      Navigator.pushReplacementNamed(context, name);
+    } else {
+      Navigator.pushNamed(context, name);
+    }
   }
 }
