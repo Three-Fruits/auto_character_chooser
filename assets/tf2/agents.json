@@ -1,0 +1,66 @@
+{
+  "agents": [
+    {
+      "id": "0",
+      "name": "Scout",
+      "realName": "Jeremy",
+      "description": "The youngest of eight boys from the south side of Boston, the Scout learned early how to solve problems with his fists. With seven older brothers on his side, fights tended to end before the runt of the litter could maneuver into punching distance, so the Scout trained himself to run. He ran everywhere, all the time, until he could beat his pack of mad dog siblings to the fray.",
+      "displayIcon": "https://wiki.teamfortress.com/w/images/1/13/Icon_scout.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/6/69/Scout.png",
+      "location": "Boston, Massachusetts, USA",
+      "motto": "Too. Much. Caffeine.",
+      "type": "Offensive",
+      "icon": "https://wiki.teamfortress.com/w/images/a/ad/Leaderboard_class_scout.png",
+      "health": "125/185",
+      "speed": "133%",
+      "color": "2f4e6b",
+      "voiceLines": [
+        "https://wiki.teamfortress.com/w/images/5/52/Scout_taunts04.wav",
+        "https://wiki.teamfortress.com/w/images/a/a5/Scout_taunts16.wav",
+        "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Soldier",
+      "realName": "Mister Jane Doe",
+      "description": "Though he wanted desperately to fight in World War 2, the Soldier was rejected from every branch of the U.S. military. Undaunted, he bought his own ticket to Europe. After arriving and finally locating Poland, the Soldier taught himself how to load and fire a variety of weapons before embarking on a Nazi killing spree for which he was awarded several medals that he designed and made himself. His rampage ended immediately upon hearing about the end of the war in 1949.",
+      "displayIcon": "https://wiki.teamfortress.com/w/images/c/c1/Icon_soldier.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/7/7b/Soldier.png",
+      "location": "Midwest, USA",
+      "motto": "I'm a Rocket Man.",
+      "type": "Offensive",
+      "icon": "https://wiki.teamfortress.com/w/images/9/96/Leaderboard_class_soldier.png",
+      "health": "200/300",
+      "speed": "80%",
+      "color": "c85b4a",
+      "voiceLines": [
+        "https://wiki.teamfortress.com/w/images/9/97/Soldier_taunts01.wav",
+        "https://wiki.teamfortress.com/w/images/f/ff/Soldier_taunts10.wav",
+        "https://wiki.teamfortress.com/w/images/9/99/Soldier_taunts02.wav",
+        "https://wiki.teamfortress.com/w/images/f/f7/Soldier_laughevil01.wav"
+      ],
+      "sprite": "https://wiki.teamfortress.com/w/images/c/c1/Soldier_BLU_3D.jpg?t=20150422005652"
+    },
+    {
+      "id": "2",
+      "name": "Scout",
+      "realName": "Jeremy",
+      "description": "The youngest of eight boys from the south side of Boston, the Scout learned early how to solve problems with his fists. With seven older brothers on his side, fights tended to end before the runt of the litter could maneuver into punching distance, so the Scout trained himself to run. He ran everywhere, all the time, until he could beat his pack of mad dog siblings to the fray.",
+      "displayIcon": "https://wiki.teamfortress.com/w/images/1/13/Icon_scout.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/6/69/Scout.png",
+      "location": "Boston, Massachusetts, USA",
+      "motto": "Too. Much. Caffeine.",
+      "type": "Offensive",
+      "icon": "https://wiki.teamfortress.com/w/images/a/ad/Leaderboard_class_scout.png",
+      "health": "125/185",
+      "speed": "133%",
+      "color": "2f4e6b",
+      "voiceLines": [
+        "https://wiki.teamfortress.com/w/images/5/52/Scout_taunts04.wav",
+        "https://wiki.teamfortress.com/w/images/a/a5/Scout_taunts16.wav",
+        "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav"
+      ]
+    }
+  ]
+}

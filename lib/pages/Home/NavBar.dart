@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class NavBar extends StatefulWidget {
   String pageName = "/home";
+
   NavBar({Key? key, required this.pageName}) : super(key: key);
 
   @override
@@ -60,7 +61,42 @@ class _NavBarState extends State<NavBar> {
                   ),
                   title: Text('Weapons'),
                   selected: widget.pageName == "/valorant_weapons",
-                  onTap: () => {/*selectDestination("/valorant_weapons")*/},
+                  onTap: () => {
+                    /*selectDestination("/valorant_weapons")*/
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.label),
+                  title: Text('Skins (soon)'),
+                  onTap: () => null,
+                ),
+              ],
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            ExpansionTile(
+              title: const Text('Team Fortress 2'),
+              // subtitle: Text('Leading expansion arrow icon'),
+              initiallyExpanded: widget.pageName.contains('tf2'),
+              controlAffinity: ListTileControlAffinity.leading,
+              children: [
+                ListTile(
+                  leading: Icon(Icons.people_outline),
+                  title: Text('Agents'),
+                  selected: widget.pageName == '/tf2_agents',
+                  onTap: () => selectDestination('/tf2_agents'),
+                ),
+                ListTile(
+                  leading: ImageIcon(
+                    AssetImage(MyImages.valorantPistol),
+                  ),
+                  title: Text('Weapons'),
+                  selected: widget.pageName == "/tf2_weapons",
+                  onTap: () => {
+                    /*selectDestination("/valorant_weapons")*/
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.label),

@@ -6,30 +6,29 @@ import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
-import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_class.dart';
+import 'package:auto_character_chooser/pages/gamespage/tf2/classpage/tf2_agent_class.dart';
 import 'package:auto_character_chooser/themes/images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:shake/shake.dart';
 
-class ValorantAgentPage extends StatefulWidget {
-  const ValorantAgentPage({Key? key}) : super(key: key);
+class Tf2AgentPage extends StatefulWidget {
+  const Tf2AgentPage({Key? key}) : super(key: key);
 
   @override
-  State<ValorantAgentPage> createState() => _ValorantAgentPageState();
+  State<Tf2AgentPage> createState() => _Tf2AgentPageState();
 }
 
-class _ValorantAgentPageState extends State<ValorantAgentPage>
+class _Tf2AgentPageState extends State<Tf2AgentPage>
     with TickerProviderStateMixin {
   StreamController<int> controller = StreamController<int>();
-  late TabController _tabController;
   var audio = AudioPlayer();
   late AnimationController panelButtonController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   DraggableScrollableController dragController =
       DraggableScrollableController();
-  List<ValorantAgent> agents = List.empty(growable: true);
+  List<Tf2Agent> agents = List.empty(growable: true);
   bool isFirstTime = true;
   bool isLoading = true;
   bool isSpinning = false;
@@ -41,7 +40,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
 
   void loadAgents() async {
     isLoading = true;
-    agents = await ValorantAgentNetwork().getAgents();
+    agents = await Tf2Network().getAgents();
     isLoading = false;
 
     detector = ShakeDetector.waitForStart(onPhoneShake: () {
@@ -57,7 +56,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     super.dispose();
     panelButtonController.dispose();
     detector.stopListening();
-    _tabController.dispose();
   }
 
   @override
@@ -66,7 +64,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     //print("Loading agents starting...");
     panelButtonController =
         AnimationController(duration: Duration(milliseconds: 450), vsync: this);
-    _tabController = TabController(length: 5, vsync: this);
 
     loadAgents();
   }
@@ -77,12 +74,12 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
       appBar: AppBar(),
-      drawer: NavBar(pageName: '/valorant_agents'),
+      drawer: NavBar(pageName: '/tf2_agents'),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(MyImages.valorantBackground),
-            fit: BoxFit.cover,
+            image: AssetImage(MyImages.tf2background),
+            fit: BoxFit.fitHeight,
           ),
         ),
         child: !isLoading
@@ -90,13 +87,11 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
                 alignment: Alignment.bottomCenter,
                 children: [
                   BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                    filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 700),
                       color: !isSpinning && !isFirstTime
-                          ? agents[currentId]
-                              .backgroundGradientColors[2]
-                              .withOpacity(0.3)
+                          ? agents[currentId].color.withOpacity(0.3)
                           : Colors.transparent,
                     ),
                   ),
@@ -128,37 +123,13 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
                             FortuneItem(
                               style: FortuneItemStyle(color: Colors.amber),
                               child: Container(
-                                color: Colors.transparent,
+                                padding: EdgeInsets.only(top: 10),
+                                color: agent.color,
                                 height: double.infinity,
                                 width: double.infinity,
-                                child: Center(
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    fit: StackFit.expand,
-                                    children: [
-                                      Container(
-                                        child: ShaderMask(
-                                          shaderCallback: (bounds) {
-                                            return LinearGradient(
-                                              colors: agent
-                                                  .backgroundGradientColors,
-                                            ).createShader(bounds);
-                                          },
-                                          child: CachedNetworkImage(
-                                            imageUrl: agent.background,
-                                            fit: BoxFit.fitHeight,
-                                          ),
-                                          blendMode: BlendMode.srcATop,
-                                        ),
-                                      ),
-                                      Container(
-                                        child: CachedNetworkImage(
-                                          imageUrl: agent.fullPortrait,
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                child: CachedNetworkImage(
+                                  imageUrl: agent.fullPortrait,
+                                  fit: BoxFit.fitHeight,
                                 ),
                               ),
                             ),
@@ -189,7 +160,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     );
   }
 
-  Widget _panel(ValorantAgent agent) {
+  Widget _panel(Tf2Agent agent) {
     return DraggableScrollableSheet(
       controller: dragController,
       initialChildSize: initialSize,
@@ -229,8 +200,8 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
                                 maxWidth: 100,
                               ),
                             ),
-                            title: Text(agent.displayName),
-                            subtitle: Text(agent.role.displayName),
+                            title: Text(agent.name),
+                            subtitle: Text(agent.type),
                             trailing: Icon(Icons.more_vert),
                           ),
                         ),
@@ -248,114 +219,16 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
                   Container(
                     alignment: Alignment.centerLeft,
                     width: 100,
                     height: 5,
                     color: Colors.amber,
                   ),
-                  // give the tab bar a height [can change hheight to preferred height]
-                  Container(
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                    ),
-                    child: TabBar(
-                      controller: _tabController,
-                      // give the indicator a decoration (color and border radius)
-                      indicator: BoxDecoration(
-                        color: Colors.amber,
-                      ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [
-                        // first tab [you can add an icon using the icon property]
-                        Tab(
-                          icon: CachedNetworkImage(
-                            imageUrl: agent.role.displayIcon,
-                          ),
-                        ),
-
-                        // second tab [you can add an icon using the icon property]
-                        for (var i in agent.ability)
-                          Tab(
-                            icon: CachedNetworkImage(
-                              imageUrl: i.displayIcon,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  // tab bar view here
-                  Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.grey, width: 0.5))),
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        // first tab bar view widget
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                agent.description,
-                              ),
-                            ),
-                            Text(
-                              agent.role.displayName,
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                agent.role.description,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        for (var i in agent.ability)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                i.displayName,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  i.description,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
               FloatingActionButton(
-                  child: ImageIcon(
-                    AssetImage(MyImages.shuffle),
-                  ),
+                  child: Icon(Icons.add),
                   onPressed: () {
                     spinWheel();
                   }),
@@ -378,9 +251,9 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     if (id < 0) {
       id = agents.length - 1;
     }
+    print(id);
     currentId = id;
     controller.add(id + 1);
-
     fetchAudio();
     onSpinStart();
     setState(() {});
@@ -389,8 +262,10 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
   void fetchAudio() async {
     audio.dispose();
     audio = AudioPlayer();
+    var rng = Random();
+    var rngid = rng.nextInt(agents[currentId].voiceLines.length);
     await audio
-        .setSourceUrl(agents[currentId].voiceLine)
+        .setSourceUrl(agents[currentId].voiceLines[rngid])
         .whenComplete(() => {});
     //await audio.release();
   }
@@ -401,9 +276,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     isSpinning = false;
     detector.startListening();
     oldId = currentId;
-
-    _tabController = TabController(
-        length: agents[currentId].ability.length + 1, vsync: this);
     openPanel();
     setState(() {});
   }

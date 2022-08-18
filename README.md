@@ -1,21 +1,6 @@
 # auto_character_chooser
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-
+Pick random agent
 ## Colorpalette
 
 https://mobilepalette.netlify.app/?color=64056f
@@ -42,3 +27,7 @@ Endpoints for accessing images or details
 Stores all kind of images thats used by app stores here. <br>
 All
  
+
+# Games
+## Team Fortress 2
+scout url -> https://wiki.teamfortress.com/wiki/Scouts
