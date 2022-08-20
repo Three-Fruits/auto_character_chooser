@@ -38,6 +38,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
   int currentId = 0;
   double initialSize = 0;
   double minSize = 0;
+  double maxChildSize = 0.5;
 
   void loadAgents() async {
     isLoading = true;
@@ -193,7 +194,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     return DraggableScrollableSheet(
       controller: dragController,
       initialChildSize: initialSize,
-      maxChildSize: 0.75,
+      maxChildSize: maxChildSize,
       minChildSize: minSize,
       snap: true,
       builder: (context, scrollController) {
@@ -420,7 +421,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
   void openPanel({bool full = false}) {
     var temp = 0.15;
     if (full) {
-      temp = 0.75;
+      temp = maxChildSize;
     }
     dragController
         .animateTo(temp,
@@ -441,7 +442,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
   }
 
   double calculatePanelHeightRatio() {
-    var OldRange = (0.75 - 0.15);
+    var OldRange = (maxChildSize - 0.15);
     var NewRange = 1;
     var NewValue = (((dragController.size - 0.15) * NewRange) / OldRange);
     return NewValue;

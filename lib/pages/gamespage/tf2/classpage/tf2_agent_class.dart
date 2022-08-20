@@ -1,69 +1,89 @@
+// To parse this JSON data, do
+//
+//     final tf2Agent = tf2AgentFromJson(jsonString);
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-class Tf2Agent {
-  String id;
-  String name;
-  String realName;
-  String description;
-  String displayIcon;
-  String fullPortrait;
-  String location;
-  String motto;
-  String type;
-  String speed;
-  String health;
-  String icon;
-  Color color;
-  List<String> voiceLines;
+class Tf2Network {
+  Future<List<Tf2Agent>> getAgents() async {
+    String response = await rootBundle.loadString('assets/tf2/agents.json');
+    var data = json.decode(response);
+    List<Tf2Agent> agents =
+        List<Tf2Agent>.from(data["agents"].map((x) => Tf2Agent.fromJson(x)));
+    return agents;
+  }
+}
 
+class Tf2Agent {
   Tf2Agent({
     required this.id,
     required this.name,
     required this.realName,
     required this.description,
     required this.displayIcon,
-    required this.location,
     required this.fullPortrait,
+    required this.location,
     required this.motto,
     required this.type,
-    required this.color,
+    required this.icon,
     required this.health,
     required this.speed,
-    required this.icon,
+    required this.color,
     required this.voiceLines,
   });
-}
 
-class Tf2Network {
-  Future<List<Tf2Agent>> getAgents() async {
-    String response = await rootBundle.loadString('assets/tf2/agents.json');
-    final data = await json.decode(response);
+  final String id;
+  final String name;
+  final String realName;
+  final String description;
+  final String displayIcon;
+  final String fullPortrait;
+  final String location;
+  final String motto;
+  final String type;
+  final String icon;
+  final String health;
+  final String speed;
+  final String color;
+  final List<String> voiceLines;
 
-    List<Tf2Agent> agents = List.empty(growable: true);
-    for (var a in data["agents"]) {
-      Color gcolor = Color(int.parse(a["color"], radix: 16));
-      agents.add(
-        Tf2Agent(
-          id: a["id"],
-          name: a["name"],
-          realName: a["realName"],
-          description: a["description"],
-          displayIcon: a["displayIcon"],
-          fullPortrait: a["fullPortrait"],
-          location: a["location"],
-          motto: a["motto"],
-          type: a["type"],
-          icon: a["icon"],
-          health: a["health"],
-          speed: a["speed"],
-          color: gcolor,
-          voiceLines: (a["voiceLines"] as List<dynamic>).cast<String>(),
-        ),
+  factory Tf2Agent.fromRawJson(String str) =>
+      Tf2Agent.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Tf2Agent.fromJson(Map<String, dynamic> json) => Tf2Agent(
+        id: json["id"],
+        name: json["name"],
+        realName: json["realName"],
+        description: json["description"],
+        displayIcon: json["displayIcon"],
+        fullPortrait: json["fullPortrait"],
+        location: json["location"],
+        motto: json["motto"],
+        type: json["type"],
+        icon: json["icon"],
+        health: json["health"],
+        speed: json["speed"],
+        color: json["color"],
+        voiceLines: List<String>.from(json["voiceLines"].map((x) => x)),
       );
-    }
-    return agents;
-  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "realName": realName,
+        "description": description,
+        "displayIcon": displayIcon,
+        "fullPortrait": fullPortrait,
+        "location": location,
+        "motto": motto,
+        "type": type,
+        "icon": icon,
+        "health": health,
+        "speed": speed,
+        "color": color,
+        "voiceLines": List<dynamic>.from(voiceLines.map((x) => x)),
+      };
 }
