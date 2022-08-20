@@ -44,22 +44,46 @@
     },
     {
       "id": "2",
-      "name": "Scout",
-      "realName": "Jeremy",
-      "description": "The youngest of eight boys from the south side of Boston, the Scout learned early how to solve problems with his fists. With seven older brothers on his side, fights tended to end before the runt of the litter could maneuver into punching distance, so the Scout trained himself to run. He ran everywhere, all the time, until he could beat his pack of mad dog siblings to the fray.",
-      "displayIcon": "https://wiki.teamfortress.com/w/images/1/13/Icon_scout.jpg",
-      "fullPortrait": "https://wiki.teamfortress.com/w/images/6/69/Scout.png",
-      "location": "Boston, Massachusetts, USA",
-      "motto": "Too. Much. Caffeine.",
+      "name": "Pyro",
+      "realName": "Unknown",
+      "description": "Only two things are known for sure about the mysterious Pyro: he sets things on fire and he doesn't speak. In fact, only the part about setting things on fire is undisputed. Some believe his occasional rasping wheeze may be an attempt to communicate through a mouth obstructed by a filter and attached to lungs ravaged by constant exposure to his asbestos-lined suit. Either way, he's a fearsome, inscrutable, on-fire Frankenstein of a man. If he even is a man.",
+      "displayIcon": "https://wiki.teamfortress.com/w/images/1/13/Icon_pyro.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/c/c8/Pyro.png",
+      "location": "Unknown",
+      "motto": "Mmph mmmph mph-mph mmph mmmmph!",
       "type": "Offensive",
-      "icon": "https://wiki.teamfortress.com/w/images/a/ad/Leaderboard_class_scout.png",
-      "health": "125/185",
-      "speed": "133%",
-      "color": "2f4e6b",
+      "icon": "https://wiki.teamfortress.com/w/images/8/80/Leaderboard_class_pyro.png",
+      "health": "175/260",
+      "speed": "100%",
+      "color": "ad6036",
       "voiceLines": [
-        "https://wiki.teamfortress.com/w/images/5/52/Scout_taunts04.wav",
-        "https://wiki.teamfortress.com/w/images/a/a5/Scout_taunts16.wav",
-        "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav"
+        "https://wiki.teamfortress.com/w/images/a/ad/Pyro_specialcompleted-assistedkill01.wav",
+        "https://wiki.teamfortress.com/w/images/0/07/Pyro_moveup01.wav",
+        "https://wiki.teamfortress.com/w/images/c/c9/Pyro_needteleporter01.wav",
+        "https://wiki.teamfortress.com/w/images/6/67/Pyro_standonthepoint01.wav",
+        "https://wiki.teamfortress.com/w/images/1/19/Pyro_autocappedintelligence01.wav"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Demoman",
+      "realName": "Tavish Finnegan DeGroot",
+      "description": "A fierce temper, a fascination with all things explosive, and a terrible plan to kill the Loch Ness Monster cost the six year old Demoman his original set of adoptive parents. Later, at the Crypt Grammar School for Orphans near Ullapool in the Scottish Highlands, the boy's bomb-making skills improved dramatically. His disposition and total number of intact eyeballs, however, did not.\nWord of his proficiency with explosives spread, and it was not long before Crypt Grammar received two visitors; the Demoman's real parents, who lovingly explained that all Demomen are abandoned at birth until their skills manifest themselves, a long-standing, cruel, and wholly unnecessary tradition among the Highland Demolition Men. His unhappy childhood had ended, but his training had just begun.",
+      "displayIcon": "https://wiki.teamfortress.com/w/images/c/c0/Icon_demoman.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/f/fd/Demoman.png",
+      "location": "Ullapool, Scotland, United Kingdom",
+      "motto": "Boom Boom Baby.",
+      "type": "Defensive",
+      "icon": "https://wiki.teamfortress.com/w/images/4/47/Leaderboard_class_demoman.png",
+      "health": "175/260",
+      "speed": "93%",
+      "color": "93a4a5",
+      "voiceLines": [
+        "https://wiki.teamfortress.com/w/images/9/99/Demoman_specialcompleted-assistedkill02.wav",
+        "https://wiki.teamfortress.com/w/images/4/4e/Demoman_moveup02.wav",
+        "https://wiki.teamfortress.com/w/images/c/cf/Demoman_yes01.wav",
+        "https://wiki.teamfortress.com/w/images/c/c0/Demoman_helpme03.wav",
+        "https://wiki.teamfortress.com/w/images/3/31/Demoman_battlecry01.wav"
       ]
     }
   ]
