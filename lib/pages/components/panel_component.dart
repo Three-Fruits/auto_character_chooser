@@ -11,6 +11,9 @@ class _MyPanelState extends State<MyPanel> with TickerProviderStateMixin {
   DraggableScrollableController dragController =
       DraggableScrollableController();
   late TabController _tabController;
+  double initialSize = 0;
+  double maxChildSize = 0.5;
+  double minSize = 0;
 
   @override
   void dispose() {
