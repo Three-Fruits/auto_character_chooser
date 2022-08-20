@@ -44,6 +44,11 @@ class _NavBarState extends State<NavBar> {
               thickness: 1,
             ),
             ExpansionTile(
+              leading: SizedBox(
+                child: ImageIcon(
+                  AssetImage(MyImages.valorantLogo),
+                ),
+              ),
               title: Text('Valorant'),
               // subtitle: Text('Leading expansion arrow icon'),
               initiallyExpanded: widget.pageName.contains('valorant'),

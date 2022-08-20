@@ -13,6 +13,8 @@ class MyImages {
       'images/Valorant/Classic_prime_VALORANT.png';
   static const String valorantPistolDefault = 'images/Valorant/displayicon.png';
   static const String valorantBanner = 'images/Valorant/valorantBanner.webp';
+  static const String valorantLogo = 'images/Valorant/valorant_logo.png';
 
-  static const String tf2background = 'images/Team_Fortress_2/tf2background.png';
+  static const String tf2background =
+      'images/Team_Fortress_2/tf2background.png';
 }
