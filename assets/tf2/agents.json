@@ -85,6 +85,117 @@
         "https://wiki.teamfortress.com/w/images/c/c0/Demoman_helpme03.wav",
         "https://wiki.teamfortress.com/w/images/3/31/Demoman_battlecry01.wav"
       ]
+    },
+    {
+      "agents": [
+        {
+          "id": "4",
+          "name": "Heavy",
+          "realName": "Misha (short for Mikhail)",
+          "description": "Like a hibernating bear, the Heavy appears to be a gentle giant. Also like a bear, confusing his deliberate, sleepy demeanor with gentleness will get you ripped limb from limb. Though he speaks simply and moves with an economy of energy that's often confused with napping, the Heavy isn't dumb; he's not your big friend and he generally wishes that you would just shut up before he has to make you shut up.",
+          "displayIcon": "https://wiki.teamfortress.com/w/images/8/8e/Icon_heavy.jpg",
+          "location": "Dzhugdzhur Mountains, Khabarovsk Krai, USSR",
+          "motto": "Shooting Good.",
+          "type": "Defensive",
+          "icon": "https://wiki.teamfortress.com/w/images/5/5a/Leaderboard_class_heavy.png",
+          "health": "300/450",
+          "speed": "77%",
+          "color": "ce563e",
+          "voiceLines": [
+            "https://wiki.teamfortress.com/w/images/c/c3/Heavy_moveup03.wav",
+            "https://wiki.teamfortress.com/w/images/d/df/Heavy_incoming03.wav",
+            "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav",
+            "https://wiki.teamfortress.com/w/images/5/54/Heavy_activatecharge03.wav",
+            "https://wiki.teamfortress.com/w/images/6/66/Heavy_helpmecapture01.wav"
+          ]
+        },
+        {
+          "id": "5",
+          "name": "Engineer",
+          "realName": "Dell Conagher",
+          "description": "Though he wanted desperately to fight in World War 2, the Soldier was rejected from every branch of the U.S. military. Undaunted, he bought his own ticket to Europe. After arriving and finally locating Poland, the Soldier taught himself how to load and fire a variety of weapons before embarking on a Nazi killing spree for which he was awarded several medals that he designed and made himself. His rampage ended immediately upon hearing about the end of the war in 1949.",
+          "displayIcon": "https://wiki.teamfortress.com/w/images/c/c1/Icon_soldier.jpg",
+          "location": "Bee Cave, Texas, USA",
+          "motto": "I like to make things",
+          "type": "Defensive",
+          "icon": "https://wiki.teamfortress.com/w/images/1/12/Leaderboard_class_engineer.png",
+          "health": "125/185",
+          "speed": "100%",
+          "color": "d68d41",
+          "voiceLines": [
+            "https://wiki.teamfortress.com/w/images/a/ae/Engineer_moveup01.wav",
+            "https://wiki.teamfortress.com/w/images/e/e9/Engineer_helpmecapture02.wav",
+            "https://wiki.teamfortress.com/w/images/9/99/Soldier_taunts02.wav",
+            "https://wiki.teamfortress.com/w/images/f/f7/Soldier_laughevil01.wav",
+            "https://wiki.teamfortress.com/w/images/e/e0/Engineer_battlecry07.wav"
+          ]
+        },
+        {
+          "id": "6",
+          "name": "Medic",
+          "realName": "Dr. Ludwig",
+          "description": "What he lacks in compassion for the sick, respect for human dignity, and any sort of verifiable formal training in medicine, the Medic more than makes up for with a bottomless supply of giant needles and a trembling enthusiasm for plunging them into exposed flesh. Raised in Stuttgart, Germany during an era when the Hippocratic oath had been downgraded to an optional Hippocratic suggestion, the Medic considers healing a generally unintended side effect of satisfying his own morbid curiosity.",
+          "displayIcon": "https://wiki.teamfortress.com/w/images/f/f5/Icon_medic.jpg",
+          "fullPortrait": "https://wiki.teamfortress.com/w/images/2/26/Medic.png",
+          "location": "Stuttgart, Germany",
+          "motto": "Prepare for your examination",
+          "type": "Support",
+          "icon": "https://wiki.teamfortress.com/w/images/e/e5/Leaderboard_class_medic.png",
+          "health": "150/225",
+          "speed": "107%",
+          "color": "86473f",
+          "voiceLines": [
+            "https://wiki.teamfortress.com/w/images/8/8b/Medic_medic03.wav",
+            "https://wiki.teamfortress.com/w/images/a/a1/Medic_taunts02.wav",
+            "https://wiki.teamfortress.com/w/images/b/b9/Medic_moveup01.wav",
+            "https://wiki.teamfortress.com/w/images/5/51/Medic_positivevocalization05.wav"
+          ]
+        },
+        {
+          "id": "7",
+          "name": "Sniper",
+          "realName": "Mr. Mundy (Birth name: Mun-dee)",
+          "description": "Half rugged outdoorsman, half alien observer, this taciturn strip of beef jerky has spent the better part of his life alone in the bush, slow baking under the Australian sun.",
+          "displayIcon": "https://wiki.teamfortress.com/w/images/a/ac/Icon_sniper.jpg",
+          "fullPortrait": "https://wiki.teamfortress.com/w/images/8/8f/Sniper.png",
+          "location": "\tNew Zealand",
+          "motto": "Pink Cloud of Death",
+          "type": "Support",
+          "icon": "https://wiki.teamfortress.com/w/images/f/fe/Leaderboard_class_sniper.png",
+          "health": "125/185",
+          "speed": "100%",
+          "color": "a9917e",
+          "voiceLines": [
+            "https://wiki.teamfortress.com/w/images/1/19/Sniper_go01.wav",
+            "https://wiki.teamfortress.com/w/images/d/df/Sniper_standonthepoint02.wav",
+            "https://wiki.teamfortress.com/w/images/3/3e/Sniper_specialweapon09.wav",
+            "https://wiki.teamfortress.com/w/images/6/6b/Sniper_specialweapon08.wav",
+            "https://wiki.teamfortress.com/w/images/f/f7/Sniper_jeers02.wav"
+          ]
+        },
+        {
+          "id": "8",
+          "name": "Spy",
+          "realName": "Unknown",
+          "description": "He is a puzzle, wrapped in an enigma, shrouded in riddles, lovingly sprinkled with intrigue, express mailed to Mystery, Alaska, and LOOK OUT BEHIND YOU! but it is too late. You're dead. For he is the Spy - globetrotting rogue, lady killer (metaphorically) and mankiller (for real).",
+          "displayIcon": "https://wiki.teamfortress.com/w/images/9/9b/Icon_spy.jpg",
+          "fullPortrait": "https://wiki.teamfortress.com/w/images/3/36/Spy.png",
+          "location": "France",
+          "motto": "...",
+          "type": "Support",
+          "icon": "https://wiki.teamfortress.com/w/images/3/33/Leaderboard_class_spy.png",
+          "health": "125/185",
+          "speed": "107%",
+          "color": "63879d",
+          "voiceLines": [
+            "https://wiki.teamfortress.com/w/images/e/ec/Spy_cloakedspy01.wav",
+            "https://wiki.teamfortress.com/w/images/0/07/Spy_helpme02.wav",
+            "https://wiki.teamfortress.com/w/images/b/b7/Spy_taunts01.wav",
+            "https://wiki.teamfortress.com/w/images/c/c8/Spy_taunts11.wav",
+            "https://wiki.teamfortress.com/w/images/7/74/Spy_positivevocalization03.wav"
+          ]
+        }
+      ]
     }
   ]
 }
