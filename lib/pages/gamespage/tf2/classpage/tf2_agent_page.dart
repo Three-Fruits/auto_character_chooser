@@ -7,6 +7,7 @@ import 'dart:ui';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/gamespage/tf2/classpage/tf2_agent_class.dart';
+import 'package:auto_character_chooser/services/string_color.dart';
 import 'package:auto_character_chooser/themes/images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,8 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 700),
                       color: !isSpinning && !isFirstTime
-                          ? agents[currentId].color.withOpacity(0.3)
+                          ? ColorConvert.converColor(agents[currentId].color)
+                              .withOpacity(0.3)
                           : Colors.transparent,
                     ),
                   ),
@@ -102,38 +104,43 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
                       maintainAnimation: true,
                       maintainState: true,
                       visible: !isFirstTime,
-                      child: FortuneBar(
-                        onAnimationEnd: () => onSpinEnd(),
-                        onAnimationStart: () => onSpinStart,
-                        styleStrategy: UniformStyleStrategy(
-                          color: Colors.transparent,
-                          borderColor: Colors.transparent,
-                        ),
-                        indicators: [],
-                        height: double.infinity,
-                        visibleItemCount: 1,
-                        fullWidth: true,
-                        onFling: () {
-                          spinWheel();
-                        },
-                        animateFirst: false,
-                        selected: controller.stream,
-                        items: [
-                          for (var agent in agents)
-                            FortuneItem(
-                              style: FortuneItemStyle(color: Colors.amber),
-                              child: Container(
-                                padding: EdgeInsets.only(top: 10),
-                                color: agent.color,
-                                height: double.infinity,
-                                width: double.infinity,
-                                child: CachedNetworkImage(
-                                  imageUrl: agent.fullPortrait,
-                                  fit: BoxFit.fitHeight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 16, bottom: 16),
+                        child: FortuneBar(
+                          rotationCount: 40,
+                          duration: Duration(seconds: 5),
+                          onAnimationEnd: () => onSpinEnd(),
+                          onAnimationStart: () => onSpinStart,
+                          styleStrategy: UniformStyleStrategy(
+                            color: Colors.transparent,
+                            borderColor: Colors.transparent,
+                          ),
+                          indicators: [],
+                          height: double.infinity,
+                          visibleItemCount: 1,
+                          fullWidth: true,
+                          onFling: () {
+                            spinWheel();
+                          },
+                          animateFirst: false,
+                          selected: controller.stream,
+                          items: [
+                            for (var agent in agents)
+                              FortuneItem(
+                                style: FortuneItemStyle(color: Colors.amber),
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  color: ColorConvert.converColor(agent.color),
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  child: CachedNetworkImage(
+                                    imageUrl: agent.fullPortrait,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

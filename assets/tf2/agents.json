@@ -92,6 +92,7 @@
       "realName": "Misha (short for Mikhail)",
       "description": "Like a hibernating bear, the Heavy appears to be a gentle giant. Also like a bear, confusing his deliberate, sleepy demeanor with gentleness will get you ripped limb from limb. Though he speaks simply and moves with an economy of energy that's often confused with napping, the Heavy isn't dumb; he's not your big friend and he generally wishes that you would just shut up before he has to make you shut up.",
       "displayIcon": "https://wiki.teamfortress.com/w/images/8/8e/Icon_heavy.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/0/08/Heavy.png",
       "location": "Dzhugdzhur Mountains, Khabarovsk Krai, USSR",
       "motto": "Shooting Good.",
       "type": "Defensive",
@@ -102,11 +103,9 @@
       "voiceLines": [
         "https://wiki.teamfortress.com/w/images/c/c3/Heavy_moveup03.wav",
         "https://wiki.teamfortress.com/w/images/d/df/Heavy_incoming03.wav",
-        "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav",
         "https://wiki.teamfortress.com/w/images/5/54/Heavy_activatecharge03.wav",
         "https://wiki.teamfortress.com/w/images/6/66/Heavy_helpmecapture01.wav"
-      ],
-      "fullportrait": "https://wiki.teamfortress.com/w/images/0/08/Heavy.png"
+      ]
     },
     {
       "id": "5",
@@ -114,6 +113,7 @@
       "realName": "Dell Conagher",
       "description": "Though he wanted desperately to fight in World War 2, the Soldier was rejected from every branch of the U.S. military. Undaunted, he bought his own ticket to Europe. After arriving and finally locating Poland, the Soldier taught himself how to load and fire a variety of weapons before embarking on a Nazi killing spree for which he was awarded several medals that he designed and made himself. His rampage ended immediately upon hearing about the end of the war in 1949.",
       "displayIcon": "https://wiki.teamfortress.com/w/images/c/c1/Icon_soldier.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/d/d8/Engineer.png",
       "location": "Bee Cave, Texas, USA",
       "motto": "I like to make things",
       "type": "Defensive",
@@ -124,11 +124,8 @@
       "voiceLines": [
         "https://wiki.teamfortress.com/w/images/a/ae/Engineer_moveup01.wav",
         "https://wiki.teamfortress.com/w/images/e/e9/Engineer_helpmecapture02.wav",
-        "https://wiki.teamfortress.com/w/images/9/99/Soldier_taunts02.wav",
-        "https://wiki.teamfortress.com/w/images/f/f7/Soldier_laughevil01.wav",
         "https://wiki.teamfortress.com/w/images/e/e0/Engineer_battlecry07.wav"
-      ],
-      "fullportrait": "https://wiki.teamfortress.com/w/images/d/d8/Engineer.png"
+      ]
     },
     {
       "id": "6",

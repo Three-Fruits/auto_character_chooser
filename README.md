@@ -31,3 +31,8 @@ All
 # Games
 ## Team Fortress 2
 scout url -> https://wiki.teamfortress.com/wiki/Scouts
+
+
+# TODO
+
+seperate panel to different folder easy to use for other pages
