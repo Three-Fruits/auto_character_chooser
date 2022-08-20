@@ -102,38 +102,41 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
                       maintainAnimation: true,
                       maintainState: true,
                       visible: !isFirstTime,
-                      child: FortuneBar(
-                        onAnimationEnd: () => onSpinEnd(),
-                        onAnimationStart: () => onSpinStart,
-                        styleStrategy: UniformStyleStrategy(
-                          color: Colors.transparent,
-                          borderColor: Colors.transparent,
-                        ),
-                        indicators: [],
-                        height: double.infinity,
-                        visibleItemCount: 1,
-                        fullWidth: true,
-                        onFling: () {
-                          spinWheel();
-                        },
-                        animateFirst: false,
-                        selected: controller.stream,
-                        items: [
-                          for (var agent in agents)
-                            FortuneItem(
-                              style: FortuneItemStyle(color: Colors.amber),
-                              child: Container(
-                                padding: EdgeInsets.only(top: 10),
-                                color: agent.color,
-                                height: double.infinity,
-                                width: double.infinity,
-                                child: CachedNetworkImage(
-                                  imageUrl: agent.fullPortrait,
-                                  fit: BoxFit.fitHeight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 16, bottom: 16),
+                        child: FortuneBar(
+                          onAnimationEnd: () => onSpinEnd(),
+                          onAnimationStart: () => onSpinStart,
+                          styleStrategy: UniformStyleStrategy(
+                            color: Colors.transparent,
+                            borderColor: Colors.transparent,
+                          ),
+                          indicators: [],
+                          height: double.infinity,
+                          visibleItemCount: 1,
+                          fullWidth: true,
+                          onFling: () {
+                            spinWheel();
+                          },
+                          animateFirst: false,
+                          selected: controller.stream,
+                          items: [
+                            for (var agent in agents)
+                              FortuneItem(
+                                style: FortuneItemStyle(color: Colors.amber),
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  color: agent.color,
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  child: CachedNetworkImage(
+                                    imageUrl: agent.fullPortrait,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
