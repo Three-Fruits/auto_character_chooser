@@ -77,7 +77,10 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Valorant"),
+        centerTitle: true,
+      ),
       drawer: NavBar(pageName: '/valorant_agents'),
       body: Container(
         decoration: BoxDecoration(
