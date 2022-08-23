@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class MyImages {
   //main
-  static const String logo = 'images/logo2.png';
+  static const String logo = 'images/Brand/logo2.png';
   static const String logoSpinButton = 'images/Brand/4games_spin_button.png';
   static const String shuffle = 'images/icons/shuffler.png';
 
