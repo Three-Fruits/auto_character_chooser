@@ -74,7 +74,11 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        
+        title: Text("Team Fortress 2"),
+        centerTitle: true,
+      ),
       drawer: NavBar(pageName: '/tf2_agents'),
       body: Container(
         decoration: BoxDecoration(
@@ -235,7 +239,9 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
                 ],
               ),
               FloatingActionButton(
-                  child: Icon(Icons.add),
+                  child: ImageIcon(
+                    AssetImage(MyImages.shuffle),
+                  ),
                   onPressed: () {
                     spinWheel();
                   }),

@@ -1,7 +1,6 @@
 import 'package:auto_character_chooser/pages/Home/home_page.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_page.dart';
 import 'package:auto_character_chooser/pages/gamespage/tf2/classpage/tf2_agent_page.dart';
-import 'package:auto_character_chooser/pages/testing/testpage.dart';
 import 'package:auto_character_chooser/themes/default_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/valorant_agents': (context) => const ValorantAgentPage(),
         '/tf2_agents': (context) => const Tf2AgentPage(),
-        '/test': (context) => TestingPage(),
       },
     );
   }

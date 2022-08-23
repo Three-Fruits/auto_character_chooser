@@ -44,6 +44,11 @@ class _NavBarState extends State<NavBar> {
               thickness: 1,
             ),
             ExpansionTile(
+              leading: SizedBox(
+                child: ImageIcon(
+                  AssetImage(MyImages.valorantLogo),
+                ),
+              ),
               title: Text('Valorant'),
               // subtitle: Text('Leading expansion arrow icon'),
               initiallyExpanded: widget.pageName.contains('valorant'),
@@ -59,7 +64,7 @@ class _NavBarState extends State<NavBar> {
                   leading: ImageIcon(
                     AssetImage(MyImages.valorantPistol),
                   ),
-                  title: Text('Weapons'),
+                  title: Text('Weapons (soon)'),
                   selected: widget.pageName == "/valorant_weapons",
                   onTap: () => {
                     /*selectDestination("/valorant_weapons")*/
@@ -78,6 +83,11 @@ class _NavBarState extends State<NavBar> {
             ),
             ExpansionTile(
               title: const Text('Team Fortress 2'),
+              leading: SizedBox(
+                child: ImageIcon(
+                  AssetImage(MyImages.tf2logo),
+                ),
+              ),
               // subtitle: Text('Leading expansion arrow icon'),
               initiallyExpanded: widget.pageName.contains('tf2'),
               controlAffinity: ListTileControlAffinity.leading,
@@ -92,7 +102,7 @@ class _NavBarState extends State<NavBar> {
                   leading: ImageIcon(
                     AssetImage(MyImages.valorantPistol),
                   ),
-                  title: Text('Weapons'),
+                  title: Text('Weapons (soon)'),
                   selected: widget.pageName == "/tf2_weapons",
                   onTap: () => {
                     /*selectDestination("/valorant_weapons")*/

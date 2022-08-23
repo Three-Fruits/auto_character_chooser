@@ -38,7 +38,9 @@ class _HomePageState extends State<HomePage> {
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: InkWell(
-                  onTap: () => {},
+                  onTap: () => {
+                    Navigator.pushReplacementNamed(context, "/valorant_agents")
+                  },
                   child: Ink(
                     height: 100,
                     width: 100,
@@ -67,13 +69,18 @@ class _HomePageState extends State<HomePage> {
                   event: () => {
                     Navigator.pushReplacementNamed(context, "/valorant_agents")
                   },
+                  title: "Valorant agents",
                   imageUrl: MyImages.valorantBanner,
                 ),
                 SizedBox(
                   width: 25,
                 ),
                 CardButtonComponent(
-                  imageUrl: MyImages.valorantBanner,
+                  event: () => {
+                    Navigator.pushReplacementNamed(context, "/tf2_agents")
+                  },
+                  title: "TF2 Agents",
+                  imageUrl: MyImages.tf2backbanner,
                 ),
               ],
             ),
@@ -84,13 +91,17 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CardButtonComponent(
-                  imageUrl: MyImages.valorantBanner,
+                  title: "RSS agents",
+                  buttonText: "soon",
+                  imageUrl: MyImages.rainbowbackBanner,
                 ),
                 SizedBox(
                   width: 25,
                 ),
                 CardButtonComponent(
-                  imageUrl: MyImages.valorantBanner,
+                  title: "Apex Legends",
+                  buttonText: "soon",
+                  imageUrl: MyImages.apexbackBanner,
                 ),
               ],
             )

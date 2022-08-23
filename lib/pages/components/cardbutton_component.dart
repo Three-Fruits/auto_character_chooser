@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class CardButtonComponent extends StatelessWidget {
   final VoidCallback? event;
   final String imageUrl;
-  const CardButtonComponent({Key? key, this.event, required this.imageUrl})
+  final String title;
+  final String buttonText;
+  const CardButtonComponent({Key? key, this.event, required this.imageUrl,required this.title, this.buttonText = "Pick now!"})
       : super(key: key);
 
   @override
@@ -41,13 +43,13 @@ class CardButtonComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Valorant agents"),
+                  Text(title),
                   SizedBox(
                     height: 8,
                   ),
                   ElevatedButton(
                     onPressed: event,
-                    child: Text("Pick now!"),
+                    child: Text(buttonText),
                   ),
                 ],
               ),
