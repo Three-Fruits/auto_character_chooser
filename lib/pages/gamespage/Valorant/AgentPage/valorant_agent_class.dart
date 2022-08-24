@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 
 class ValorantAgent {
@@ -8,7 +9,7 @@ class ValorantAgent {
   String displayName;
   String description;
   String displayIcon;
-  String bustPortrait;
+  String? bustPortrait;
   String fullPortrait;
   String background;
   bool isPlayableCharacter;
@@ -17,12 +18,51 @@ class ValorantAgent {
   Role role;
   List<Ability> ability;
 
+  factory ValorantAgent.fromJson(Map<String, dynamic> json) {
+    List<Color> gcolor = List.empty(growable: true);
+    for (var i in json["backgroundGradientColors"]) {
+      gcolor.add(Color(int.parse(i, radix: 16)));
+    }
+    Role r = Role(
+      uuid: json["role"]["uuid"],
+      displayName: json["role"]["displayName"],
+      displayIcon: json["role"]["displayIcon"],
+      description: json["role"]["description"],
+    );
+    List<Ability> ab = List.empty(growable: true);
+    for (var i in json["abilities"]) {
+      if (i["displayIcon"] == null) continue;
+      ab.add(
+        Ability(
+          slot: i["slot"],
+          displayName: i["displayName"],
+          description: i["description"],
+          displayIcon: i["displayIcon"],
+        ),
+      );
+    }
+    return ValorantAgent(
+      uuid: json["uuid"],
+      displayName: json["displayName"],
+      description: json["description"],
+      displayIcon: json["displayIcon"],
+      fullPortrait: json["fullPortrait"],
+      bustPortrait: json["bustPortrait"],
+      background: json["background"],
+      isPlayableCharacter: json["isPlayableCharacter"],
+      backgroundGradientColors: gcolor,
+      voiceLine: json["voiceLine"]["mediaList"][0]["wave"],
+      role: r,
+      ability: ab,
+    );
+  }
+
   ValorantAgent({
     required this.uuid,
     required this.displayName,
     required this.description,
     required this.displayIcon,
-    required this.bustPortrait,
+    this.bustPortrait,
     required this.fullPortrait,
     required this.background,
     required this.isPlayableCharacter,
@@ -63,63 +103,11 @@ class Ability {
 
 class ValorantAgentNetwork {
   Future<List<ValorantAgent>> getAgents() async {
-    try {
-      Response response = await get(
-        Uri.parse("https://valorant-api.com/v1/agents"),
-      );
-      Map data = jsonDecode(response.body);
-
-      if (data['status'] == 200) {
-        List<ValorantAgent> agents = List.empty(growable: true);
-        for (var a in data["data"]) {
-          if (!a["isPlayableCharacter"]) continue;
-          List<Color> gcolor = List.empty(growable: true);
-          for (var i in a["backgroundGradientColors"]) {
-            gcolor.add(Color(int.parse(i, radix: 16)));
-          }
-          Role r = Role(
-            uuid: a["role"]["uuid"],
-            displayName: a["role"]["displayName"],
-            displayIcon: a["role"]["displayIcon"],
-            description: a["role"]["description"],
-          );
-          List<Ability> ab = List.empty(growable: true);
-          for (var i in a["abilities"]) {
-            if (i["displayIcon"] == null) continue;
-            ab.add(
-              Ability(
-                slot: i["slot"],
-                displayName: i["displayName"],
-                description: i["description"],
-                displayIcon: i["displayIcon"],
-              ),
-            );
-          }
-          agents.add(
-            ValorantAgent(
-              uuid: a["uuid"],
-              displayName: a["displayName"],
-              description: a["description"],
-              displayIcon: a["displayIcon"],
-              bustPortrait: a["bustPortrait"],
-              fullPortrait: a["fullPortrait"],
-              background: a["background"],
-              isPlayableCharacter: a["isPlayableCharacter"],
-              backgroundGradientColors: gcolor,
-              voiceLine: a["voiceLine"]["mediaList"][0]["wave"],
-              role: r,
-              ability: ab,
-            ),
-          );
-        }
-        return agents;
-      } else {
-        print(data['error']['message']);
-        return List.empty();
-      }
-    } catch (e) {
-      print(e.toString());
-      return List.empty();
-    }
+    String response =
+        await rootBundle.loadString('assets/valorant/agents.json');
+    var data = json.decode(response);
+    List<ValorantAgent> agents = List<ValorantAgent>.from(
+        data["data"].map((x) => ValorantAgent.fromJson(x)));
+    return agents;
   }
 }

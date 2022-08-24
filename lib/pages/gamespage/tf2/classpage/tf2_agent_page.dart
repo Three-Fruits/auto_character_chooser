@@ -6,9 +6,11 @@ import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
+import 'package:auto_character_chooser/pages/components/panel_component.dart';
 import 'package:auto_character_chooser/pages/gamespage/tf2/classpage/tf2_agent_class.dart';
 import 'package:auto_character_chooser/services/string_color.dart';
 import 'package:auto_character_chooser/themes/images.dart';
+import 'package:auto_character_chooser/themes/my_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
@@ -24,11 +26,9 @@ class Tf2AgentPage extends StatefulWidget {
 class _Tf2AgentPageState extends State<Tf2AgentPage>
     with TickerProviderStateMixin {
   StreamController<int> controller = StreamController<int>();
+  MyPanelController panelController = MyPanelController();
   var audio = AudioPlayer();
-  late AnimationController panelButtonController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  DraggableScrollableController dragController =
-      DraggableScrollableController();
   List<Tf2Agent> agents = List.empty(growable: true);
   bool isFirstTime = true;
   bool isLoading = true;
@@ -36,8 +36,6 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
   late ShakeDetector detector;
   int oldId = 0;
   int currentId = 0;
-  double initialSize = 0;
-  double minSize = 0;
 
   void loadAgents() async {
     isLoading = true;
@@ -55,7 +53,6 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    panelButtonController.dispose();
     detector.stopListening();
   }
 
@@ -63,8 +60,6 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
   void initState() {
     super.initState();
     //print("Loading agents starting...");
-    panelButtonController =
-        AnimationController(duration: Duration(milliseconds: 450), vsync: this);
 
     loadAgents();
   }
@@ -75,7 +70,6 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
       appBar: AppBar(
-        
         title: Text("Team Fortress 2"),
         centerTitle: true,
       ),
@@ -148,7 +142,19 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
                       ),
                     ),
                   ),
-                  _panel(agents[oldId]),
+                  MyPanel(
+                    controller: panelController,
+                    floatButtonPressed: () => {spinWheel()},
+                    profileImage: CachedNetworkImageProvider(
+                      agents[oldId].displayIcon,
+                      maxHeight: 100,
+                      maxWidth: 100,
+                    ),
+                    title: Text(agents[oldId].name),
+                    subtitle: Text(agents[oldId].type),
+                    trailing: Icon(Icons.more_vert),
+                    child: panelBody(agents[oldId]),
+                  ),
                   if (isFirstTime)
                     InkWell(
                       onTap: () => spinWheel(),
@@ -171,84 +177,58 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
     );
   }
 
-  Widget _panel(Tf2Agent agent) {
-    return DraggableScrollableSheet(
-      controller: dragController,
-      initialChildSize: initialSize,
-      maxChildSize: 0.75,
-      minChildSize: minSize,
-      snap: true,
-      builder: (context, scrollController) {
-        return Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30),
-            ),
+  Widget panelBody(Tf2Agent agent) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          width: 100,
+          height: 5,
+          color: Colors.amber,
+        ),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Basic Information"),
           ),
-          child: Stack(
-            alignment: Alignment.topRight,
+        ),
+        Column(children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              ListView(
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: scrollController,
-                shrinkWrap: true,
-                children: [
-                  InkWell(
-                    onTap: () => {
-                      openPanel(full: dragController.size < 0.2),
-                    },
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: CachedNetworkImageProvider(
-                                agent.displayIcon,
-                                maxHeight: 100,
-                                maxWidth: 100,
-                              ),
-                            ),
-                            title: Text(agent.name),
-                            subtitle: Text(agent.type),
-                            trailing: Icon(Icons.more_vert),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: AnimatedIcon(
-                            icon: AnimatedIcons.close_menu,
-                            progress: AnimationController(
-                              value: 1 - calculatePanelHeightRatio(),
-                              vsync: this,
-                            ),
-                            semanticLabel: 'Show menu',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    width: 100,
-                    height: 5,
-                    color: Colors.amber,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Icon: "),
               ),
-              FloatingActionButton(
-                  child: ImageIcon(
-                    AssetImage(MyImages.shuffle),
-                  ),
-                  onPressed: () {
-                    spinWheel();
-                  }),
+              CachedNetworkImage(imageUrl: agent.icon),
+              Padding(
+                padding: const EdgeInsets.only(left: 45),
+                child: Text("Type: " + agent.type),
+              ),
             ],
           ),
-        );
-      },
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  "Health: " + agent.health,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 45),
+                child: Text(
+                  "Speed: " + agent.health,
+                  style: TextStyle(color: MyColors.yellow),
+                ),
+              ),
+            ],
+          )
+        ]),
+      ],
     );
   }
 
@@ -289,7 +269,7 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
     isSpinning = false;
     detector.startListening();
     oldId = currentId;
-    openPanel();
+    panelController.openPanel();
     setState(() {});
   }
 
@@ -298,37 +278,7 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
     isSpinning = true;
     setState(() {});
     detector.stopListening();
-    closePanel();
+    panelController.closePanel();
     setState(() {});
-  }
-
-  void openPanel({bool full = false}) {
-    var temp = 0.15;
-    if (full) {
-      temp = 0.75;
-    }
-    dragController
-        .animateTo(temp,
-            duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
-        .then((value) => setState(() => {
-              initialSize = temp,
-              minSize = 0.15,
-            }));
-  }
-
-  void closePanel() {
-    minSize = 0;
-    setState(() {});
-    dragController
-        .animateTo(0.00,
-            duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
-        .then((value) => setState(() => initialSize = 0));
-  }
-
-  double calculatePanelHeightRatio() {
-    var OldRange = (0.75 - 0.15);
-    var NewRange = 1;
-    var NewValue = (((dragController.size - 0.15) * NewRange) / OldRange);
-    return NewValue;
   }
 }
