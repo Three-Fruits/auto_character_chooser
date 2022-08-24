@@ -1,10 +1,16 @@
+import 'package:auto_character_chooser/themes/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class DefaultTheme {
   ThemeData defaultTheme() {
     final ThemeData base = ThemeData.dark();
     return base.copyWith(
-      // colorScheme: _defaultColorCheme,
+      backgroundColor: MyColors.xiketic,
+      scaffoldBackgroundColor: MyColors.xiketic,
+      focusColor: MyColors.yellow,
+      colorScheme: _defaultColorCheme,
+      appBarTheme: AppBarTheme(backgroundColor: MyColors.xiketic),
+      drawerTheme: DrawerThemeData(backgroundColor: MyColors.xiketic),
       textTheme: _buildDefaultTextTheme(base.textTheme),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -36,19 +42,19 @@ TextTheme _buildDefaultTextTheme(TextTheme base) {
       );
 }
 
-// const ColorScheme _defaultColorCheme = ColorScheme(
-//   primary: mainColor,
-//   secondary: shrinePink50,
-//   surface: shrineSurfaceWhite,
-//   background: shrineBackgroundWhite,
-//   error: shrineErrorRed,
-//   onPrimary: shrineBrown900,
-//   onSecondary: shrineBrown900,
-//   onSurface: shrineBrown900,
-//   onBackground: shrineBrown900,
-//   onError: shrineSurfaceWhite,
-//   brightness: Brightness.dark,
-// );
+const ColorScheme _defaultColorCheme = ColorScheme(
+  brightness: Brightness.dark,
+  primary: MyColors.yellow,
+  onPrimary: MyColors.yellow,
+  secondary: MyColors.yellow,
+  onSecondary: MyColors.black,
+  error: MyColors.yellow,
+  onError: MyColors.yellow,
+  background: MyColors.yellow,
+  onBackground: MyColors.yellow,
+  surface: MyColors.yellow,
+  onSurface: MyColors.yellow,
+);
 
 const Color mainColor = Color(0xFF64056F);
 const Color secondaryColor = Color(0xFFFAF4FB);

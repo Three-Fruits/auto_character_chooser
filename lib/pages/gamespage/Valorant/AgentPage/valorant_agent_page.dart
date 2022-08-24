@@ -6,6 +6,7 @@ import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
+import 'package:auto_character_chooser/pages/components/panel_component.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_class.dart';
 import 'package:auto_character_chooser/themes/images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -23,12 +24,10 @@ class ValorantAgentPage extends StatefulWidget {
 class _ValorantAgentPageState extends State<ValorantAgentPage>
     with TickerProviderStateMixin {
   StreamController<int> controller = StreamController<int>();
+  MyPanelController panelController = MyPanelController();
   late TabController _tabController;
   var audio = AudioPlayer();
-  late AnimationController panelButtonController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  DraggableScrollableController dragController =
-      DraggableScrollableController();
   List<ValorantAgent> agents = List.empty(growable: true);
   bool isFirstTime = true;
   bool isLoading = true;
@@ -36,9 +35,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
   late ShakeDetector detector;
   int oldId = 0;
   int currentId = 0;
-  double initialSize = 0;
-  double minSize = 0;
-  double maxChildSize = 0.5;
 
   void loadAgents() async {
     isLoading = true;
@@ -54,9 +50,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    panelButtonController.dispose();
     detector.stopListening();
     _tabController.dispose();
   }
@@ -65,8 +59,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
   void initState() {
     super.initState();
     //print("Loading agents starting...");
-    panelButtonController =
-        AnimationController(duration: Duration(milliseconds: 450), vsync: this);
     _tabController = TabController(length: 5, vsync: this);
 
     loadAgents();
@@ -170,7 +162,20 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
                       ),
                     ),
                   ),
-                  _panel(agents[oldId]),
+                  // _panel(agents[oldId]),
+                  MyPanel(
+                    controller: panelController,
+                    floatButtonPressed: () => {spinWheel()},
+                    profileImage: CachedNetworkImageProvider(
+                      agents[oldId].displayIcon,
+                      maxHeight: 100,
+                      maxWidth: 100,
+                    ),
+                    title: Text(agents[oldId].displayName),
+                    subtitle: Text(agents[oldId].role.displayName),
+                    trailing: Icon(Icons.more_vert),
+                    child: panelBody(),
+                  ),
                   if (isFirstTime)
                     InkWell(
                       onTap: () => spinWheel(),
@@ -193,180 +198,110 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     );
   }
 
-  Widget _panel(ValorantAgent agent) {
-    return DraggableScrollableSheet(
-      controller: dragController,
-      initialChildSize: initialSize,
-      maxChildSize: maxChildSize,
-      minChildSize: minSize,
-      snap: true,
-      builder: (context, scrollController) {
-        return Container(
-          clipBehavior: Clip.antiAlias,
+  Widget panelBody() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          width: 100,
+          height: 5,
+          color: Colors.amber,
+        ),
+        // give the tab bar a height [can change hheight to preferred height]
+        Container(
+          height: 45,
           decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30),
-            ),
+            color: Colors.grey[300],
           ),
-          child: Stack(
-            alignment: Alignment.topRight,
+          child: TabBar(
+            controller: _tabController,
+            // give the indicator a decoration (color and border radius)
+            indicator: BoxDecoration(
+              color: Colors.amber,
+            ),
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
+            tabs: [
+              // first tab [you can add an icon using the icon property]
+              Tab(
+                icon: CachedNetworkImage(
+                  imageUrl: agents[oldId].role.displayIcon,
+                ),
+              ),
+
+              // second tab [you can add an icon using the icon property]
+              for (var i in agents[oldId].ability)
+                Tab(
+                  icon: CachedNetworkImage(
+                    imageUrl: i.displayIcon,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        // tab bar view here
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
+          child: TabBarView(
+            physics: BouncingScrollPhysics(),
+            controller: _tabController,
             children: [
-              ListView(
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: scrollController,
-                shrinkWrap: true,
+              // first tab bar view widget
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  InkWell(
-                    onTap: () => {
-                      openPanel(full: dragController.size < 0.2),
-                    },
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: CachedNetworkImageProvider(
-                                agent.displayIcon,
-                                maxHeight: 100,
-                                maxWidth: 100,
-                              ),
-                            ),
-                            title: Text(agent.displayName),
-                            subtitle: Text(agent.role.displayName),
-                            trailing: Icon(Icons.more_vert),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: AnimatedIcon(
-                            icon: AnimatedIcons.close_menu,
-                            progress: AnimationController(
-                              value: 1 - calculatePanelHeightRatio(),
-                              vsync: this,
-                            ),
-                            semanticLabel: 'Show menu',
-                          ),
-                        ),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      agents[oldId].description,
                     ),
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    width: 100,
-                    height: 5,
-                    color: Colors.amber,
-                  ),
-                  // give the tab bar a height [can change hheight to preferred height]
-                  Container(
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                    ),
-                    child: TabBar(
-                      controller: _tabController,
-                      // give the indicator a decoration (color and border radius)
-                      indicator: BoxDecoration(
-                        color: Colors.amber,
-                      ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [
-                        // first tab [you can add an icon using the icon property]
-                        Tab(
-                          icon: CachedNetworkImage(
-                            imageUrl: agent.role.displayIcon,
-                          ),
-                        ),
-
-                        // second tab [you can add an icon using the icon property]
-                        for (var i in agent.ability)
-                          Tab(
-                            icon: CachedNetworkImage(
-                              imageUrl: i.displayIcon,
-                            ),
-                          ),
-                      ],
+                  Text(
+                    agents[oldId].role.displayName,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  // tab bar view here
-                  Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.grey, width: 0.5))),
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        // first tab bar view widget
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                agent.description,
-                              ),
-                            ),
-                            Text(
-                              agent.role.displayName,
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                agent.role.description,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        for (var i in agent.ability)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                i.displayName,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  i.description,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      agents[oldId].role.description,
                     ),
                   ),
                 ],
               ),
-              FloatingActionButton(
-                  child: ImageIcon(
-                    AssetImage(MyImages.shuffle),
-                  ),
-                  onPressed: () {
-                    spinWheel();
-                  }),
+
+              for (var i in agents[oldId].ability)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      i.displayName,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        i.description,
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 
@@ -396,7 +331,6 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     await audio
         .setSourceUrl(agents[currentId].voiceLine)
         .whenComplete(() => {});
-    //await audio.release();
   }
 
   void onSpinEnd() {
@@ -408,7 +342,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
 
     _tabController = TabController(
         length: agents[currentId].ability.length + 1, vsync: this);
-    openPanel();
+    panelController.openPanel();
     setState(() {});
   }
 
@@ -417,37 +351,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     isSpinning = true;
     setState(() {});
     detector.stopListening();
-    closePanel();
+    panelController.closePanel();
     setState(() {});
-  }
-
-  void openPanel({bool full = false}) {
-    var temp = 0.15;
-    if (full) {
-      temp = maxChildSize;
-    }
-    dragController
-        .animateTo(temp,
-            duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
-        .then((value) => setState(() => {
-              initialSize = temp,
-              minSize = 0.15,
-            }));
-  }
-
-  void closePanel() {
-    minSize = 0;
-    setState(() {});
-    dragController
-        .animateTo(0.00,
-            duration: Duration(milliseconds: 200), curve: Curves.easeInCubic)
-        .then((value) => setState(() => initialSize = 0));
-  }
-
-  double calculatePanelHeightRatio() {
-    var OldRange = (maxChildSize - 0.15);
-    var NewRange = 1;
-    var NewValue = (((dragController.size - 0.15) * NewRange) / OldRange);
-    return NewValue;
   }
 }

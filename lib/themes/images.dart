@@ -14,7 +14,7 @@ class MyImages {
   static const String valorantPistolDefault = 'images/Valorant/displayicon.png';
   static const String valorantBanner = 'images/Valorant/valorant_banner.png';
   static const String valorantLogo = 'images/Valorant/valorant_logo.png';
-  static const String agenticon = 'images/Valorant/agenticon.png';
+  static const String valorantagenticon = 'images/Valorant/agenticon.png';
 
   //TF2
   static const String tf2background =
@@ -26,7 +26,7 @@ class MyImages {
 
   //R6S
   static const String rainbowbackBanner =
-      'images/Rainbow_Six_Siege/r6s_operators.png';
+      'images/Rainbow_Six_Siege/r6s_operator.png';
   static const String r6s2 = 'images/Rainbow_Six_Siege/r6s.png';
 
   //Apex

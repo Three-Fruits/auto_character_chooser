@@ -1,4 +1,5 @@
 import 'package:auto_character_chooser/themes/images.dart';
+import 'package:auto_character_chooser/themes/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -19,13 +20,12 @@ class _NavBarState extends State<NavBar> {
     return SafeArea(
       child: Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Header',
+                'Random Agent Picker',
                 style: textTheme.headline6,
               ),
             ),
@@ -34,7 +34,10 @@ class _NavBarState extends State<NavBar> {
               thickness: 1,
             ),
             ListTile(
-              leading: Icon(Icons.bookmark),
+              leading: Icon(
+                Icons.home,
+                color: widget.pageName == '/home' ? null : MyColors.yellow,
+              ),
               title: Text('Home'),
               selected: widget.pageName == '/home',
               onTap: () => selectDestination('/home'),
@@ -50,12 +53,14 @@ class _NavBarState extends State<NavBar> {
                 ),
               ),
               title: Text('Valorant'),
-              // subtitle: Text('Leading expansion arrow icon'),
               initiallyExpanded: widget.pageName.contains('valorant'),
+              collapsedIconColor: Colors.red,
               controlAffinity: ListTileControlAffinity.leading,
               children: [
                 ListTile(
-                  leading: Icon(Icons.people_outline),
+                  leading: ImageIcon(
+                    AssetImage(MyImages.valorantagenticon),
+                  ),
                   title: Text('Agents'),
                   selected: widget.pageName == '/valorant_agents',
                   onTap: () => selectDestination('/valorant_agents'),
@@ -66,9 +71,7 @@ class _NavBarState extends State<NavBar> {
                   ),
                   title: Text('Weapons (soon)'),
                   selected: widget.pageName == "/valorant_weapons",
-                  onTap: () => {
-                    /*selectDestination("/valorant_weapons")*/
-                  },
+                  onTap: () => null,
                 ),
                 ListTile(
                   leading: Icon(Icons.label),
@@ -90,10 +93,14 @@ class _NavBarState extends State<NavBar> {
               ),
               // subtitle: Text('Leading expansion arrow icon'),
               initiallyExpanded: widget.pageName.contains('tf2'),
+
+              collapsedIconColor: Colors.orange,
               controlAffinity: ListTileControlAffinity.leading,
               children: [
                 ListTile(
-                  leading: Icon(Icons.people_outline),
+                  leading: ImageIcon(
+                    AssetImage(MyImages.tf2icon),
+                  ),
                   title: Text('Agents'),
                   selected: widget.pageName == '/tf2_agents',
                   onTap: () => selectDestination('/tf2_agents'),
@@ -104,9 +111,7 @@ class _NavBarState extends State<NavBar> {
                   ),
                   title: Text('Weapons (soon)'),
                   selected: widget.pageName == "/tf2_weapons",
-                  onTap: () => {
-                    /*selectDestination("/valorant_weapons")*/
-                  },
+                  onTap: () => null,
                 ),
                 ListTile(
                   leading: Icon(Icons.label),
@@ -122,6 +127,7 @@ class _NavBarState extends State<NavBar> {
   }
 
   void selectDestination(String name) {
+    if (widget.pageName == name) return;
     setState(() {
       widget.pageName = name;
     });
