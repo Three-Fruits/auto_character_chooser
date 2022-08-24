@@ -193,41 +193,137 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
             child: Text("Basic Information"),
           ),
         ),
-        Column(children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Icon: "),
-              ),
-              CachedNetworkImage(imageUrl: agent.icon),
-              Padding(
-                padding: const EdgeInsets.only(left: 45),
-                child: Text("Type: " + agent.type),
-              ),
-            ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            CachedNetworkImage(
+              imageUrl: agent.fullPortrait,
+              height: 80,
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Icon: "),
+                    ),
+                    CachedNetworkImage(imageUrl: agent.icon),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 45),
+                      child: Text("Type: " + agent.type),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        "Health: " + agent.health,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 45),
+                      child: Text(
+                        "Speed: " + agent.health,
+                        style: TextStyle(color: MyColors.yellow),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Bio"),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  "Health: " + agent.health,
-                  style: TextStyle(color: Colors.red),
+        ),
+        Table(
+          border: TableBorder.all(color: MyColors.white),
+          columnWidths: const <int, TableColumnWidth>{
+            0: FixedColumnWidth(130),
+            1: FlexColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: <TableRow>[
+            TableRow(
+              children: <Widget>[
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                    child: Text("Real Name: "),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 45),
-                child: Text(
-                  "Speed: " + agent.health,
-                  style: TextStyle(color: MyColors.yellow),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                      child: Text(agent.realName)),
                 ),
-              ),
-            ],
-          )
-        ]),
+              ],
+            ),
+            TableRow(
+              children: <Widget>[
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text("Location of origin: "),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(agent.location)),
+                ),
+              ],
+            ),
+            TableRow(
+              children: <Widget>[
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text("motto: "),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text('"' + agent.motto + '"')),
+                ),
+              ],
+            ),
+            TableRow(
+              children: <Widget>[
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text("description: "),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(agent.description)),
+                ),
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }
