@@ -19,6 +19,7 @@ class _NavBarState extends State<NavBar> {
     final textTheme = theme.textTheme;
     return SafeArea(
       child: Drawer(
+        width: 240,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
