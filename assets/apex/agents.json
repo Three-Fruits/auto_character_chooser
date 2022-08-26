@@ -1,0 +1,65 @@
+{
+  "agents": [
+    {
+      "name": "Bangalore",
+      "realName": "Anita Williams",
+      "tag": "Professional Soldier",
+      "gender": "Female",
+      "age": 38,
+      "homeworld": "Gridiron",
+      "weight": "82 kg",
+      "height": "183 cm",
+      "type": "Offensive",
+      "tactical": {
+        "slot": "Tactical",
+        "displayName": "Smoke Launcher",
+        "description": "Fire a high-velocity smoke canister that explodes into a smoke wall on impact.",
+        "cooldown": 33,
+        "displayIcon": "https://static.wikia.nocookie.net/apexlegends_gamepedia_en/images/a/a2/Smoke_Launcher.svg",
+        "info": [
+          "Has two charges, allowing it to be used twice in a row.",
+          "The launcher allows Bangalore to fire canisters farther than grenades can be thrown.",
+          "Upon landing, the canister splits into three, which land in a line perpendicular to where it was launched from. Takes 23 seconds to evaporate.",
+          "The canister's explosion deals 10 damage to enemies.",
+          "Melee to cancel the launch."
+        ]
+      },
+      "passive": {
+        "slot": "Passive",
+        "displayName": "Double Time",
+        "description": "Taking fire while sprinting makes you move faster for a brief time.",
+        "displayIcon": "https://static.wikia.nocookie.net/apexlegends_gamepedia_en/images/e/e2/Double_Time.svg",
+        "info": [
+          "Double Time activates upon being hit, or when bullets/grenades barely miss you, while sprinting.",
+          "Grants a 30% increase in movement speed for 2 seconds."
+        ]
+      },
+      "ultimate": {
+        "slot": "Ultimate",
+        "displayName": "Rolling Thunder",
+        "description": "Call in an artillery strike that slowly creeps across the landscape.",
+        "chargetime": 	3,
+        "displayIcon": "https://static.wikia.nocookie.net/apexlegends_gamepedia_en/images/d/d6/Rolling_Thunder.svg",
+        "info": [
+          "Bangalore throws a flare, and several rows of missiles land sequentially in front of the flare then stick for 6 seconds before exploding. Since they land in rows, this creates a sort of wave of explosions moving forward from the flare.",
+          "The missiles land in a 6x6 square, with the maximum distance of 70m ahead from the flare.",
+          "Each explosion deals 40 damage and slows enemies. This ability cannot damage squadmates, but it will still cause a slowing effect.",
+          "Rolling Thunder is referred as 'Creeping Barrage' in death recap, obituaries and its corresponding stat tracker."
+        ]
+      },
+      "displayIcon": "https://wiki.teamfortress.com/w/images/1/13/Icon_scout.jpg",
+      "fullPortrait": "https://wiki.teamfortress.com/w/images/6/69/Scout.png",
+      "location": "Boston, Massachusetts, USA",
+      "motto": "Too. Much. Caffeine.",
+      "icon": "https://wiki.teamfortress.com/w/images/a/ad/Leaderboard_class_scout.png",
+      "health": "125/185",
+      "speed": "133%",
+      "color": "2f4e6b",
+      "voiceLines": [
+        "https://wiki.teamfortress.com/w/images/5/52/Scout_taunts04.wav",
+        "https://wiki.teamfortress.com/w/images/a/a5/Scout_taunts16.wav",
+        "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav"
+      ]
+    }
+  ]
+}
