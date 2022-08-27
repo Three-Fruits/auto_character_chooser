@@ -8,6 +8,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/components/panel_component.dart';
 import 'package:auto_character_chooser/pages/gamespage/tf2/classpage/tf2_agent_class.dart';
+import 'package:auto_character_chooser/services/local_data.dart';
 import 'package:auto_character_chooser/services/string_color.dart';
 import 'package:auto_character_chooser/themes/images.dart';
 import 'package:auto_character_chooser/themes/my_colors.dart';
@@ -355,7 +356,7 @@ class _Tf2AgentPageState extends State<Tf2AgentPage>
     var rngid = rng.nextInt(agents[currentId].voiceLines.length);
     await audio
         .setSourceUrl(agents[currentId].voiceLines[rngid])
-        .whenComplete(() => {});
+        .whenComplete(() => {audio.setVolume(MyLocalData.audioVolume / 100)});
     //await audio.release();
   }
 

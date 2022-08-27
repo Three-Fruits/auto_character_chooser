@@ -46,18 +46,7 @@
           "Each explosion deals 40 damage and slows enemies. This ability cannot damage squadmates, but it will still cause a slowing effect.",
           "Rolling Thunder is referred as 'Creeping Barrage' in death recap, obituaries and its corresponding stat tracker."
         ]
-      },
-      "displayIcon": "https://wiki.teamfortress.com/w/images/1/13/Icon_scout.jpg",
-      "fullPortrait": "https://wiki.teamfortress.com/w/images/6/69/Scout.png",
-      "icon": "https://wiki.teamfortress.com/w/images/a/ad/Leaderboard_class_scout.png",
-      "health": "125/185",
-      "speed": "133%",
-      "color": "2f4e6b",
-      "voiceLines": [
-        "https://wiki.teamfortress.com/w/images/5/52/Scout_taunts04.wav",
-        "https://wiki.teamfortress.com/w/images/a/a5/Scout_taunts16.wav",
-        "https://wiki.teamfortress.com/w/images/b/be/Scout_domination02.wav"
-      ]
+      }
     }
   ]
 }

@@ -121,6 +121,15 @@ class _NavBarState extends State<NavBar> {
                 ),
               ],
             ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () => selectDestination('/setting'),
+            ),
           ],
         ),
       ),
@@ -128,7 +137,7 @@ class _NavBarState extends State<NavBar> {
   }
 
   void selectDestination(String name) {
-    if (widget.pageName == name) return;
+    if (widget.pageName == name && widget.pageName != "/setting") return;
     setState(() {
       widget.pageName = name;
     });

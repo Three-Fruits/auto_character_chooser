@@ -8,6 +8,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_character_chooser/pages/Home/NavBar.dart';
 import 'package:auto_character_chooser/pages/components/panel_component.dart';
 import 'package:auto_character_chooser/pages/gamespage/Valorant/AgentPage/valorant_agent_class.dart';
+import 'package:auto_character_chooser/services/local_data.dart';
 import 'package:auto_character_chooser/themes/images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -330,7 +331,7 @@ class _ValorantAgentPageState extends State<ValorantAgentPage>
     audio = AudioPlayer();
     await audio
         .setSourceUrl(agents[currentId].voiceLine)
-        .whenComplete(() => {});
+        .whenComplete(() => {audio.setVolume(MyLocalData.audioVolume / 100)});
   }
 
   void onSpinEnd() {
